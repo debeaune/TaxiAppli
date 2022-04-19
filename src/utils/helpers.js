@@ -1,5 +1,5 @@
-import { Platform, AsyncStorageStatic } from 'react-native';
-import * as Google from 'expo-google-app-auth';
+import { Platform, AsyncStorageStatic } from "react-native";
+import * as Google from "expo-auth-session";
 
 export const prefix = Platform.OS === "ios" ? "ios" : "md";
 
@@ -27,6 +27,19 @@ export const auth = async = () => {
     }
     catch(e){
         conole.error("error.auth", e);
+    }
+}
+
+export const renderInitialScreen = async () => {
+    try
+    {
+       const user =  await AsyncStorageStatic.getItem('user');
+       JSON.parse(user);
+       return user ? "Home" : "Login";
+    }
+    catch(e)
+    {
+        console.error('error render initial screen', e);
     }
 }
 
