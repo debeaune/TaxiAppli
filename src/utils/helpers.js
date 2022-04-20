@@ -1,4 +1,5 @@
-import { Platform, AsyncStorageStatic } from "react-native";
+import { Platform } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 import * as Google from "expo-auth-session";
 
 export const prefix = Platform.OS === "ios" ? "ios" : "md";
@@ -8,6 +9,10 @@ const config = {
     androidClientId: `884646140733-kv8bum2peil83g6cflsop5bg8bsch0c3.apps.googleusercontent.com`,
 };
 
+export const API_KEY = "AIzaSyAlHyKcjM3q3qoaahTIbzeVBLjz-EQXThw";
+
+export const BASE_URL = "https://maps.googleapis.com/maps/api";
+
 export const auth = async = () => {
     try{
         const { user,type } = await Google.logInAsync(config);
@@ -16,7 +21,7 @@ export const auth = async = () => {
             // stocker l'utilisateur dans la BDD
             // stocker l'utilisateur dans le mémoire interne
             const { name, photoUrl, email } = user;
-            await AsyncStorageStatic.setItem('user', JSON.stringify({
+            await AsyncStorage.setItem('user', JSON.stringify({
               name,
               photoUrl,
               email
@@ -33,7 +38,7 @@ export const auth = async = () => {
 export const renderInitialScreen = async () => {
     try
     {
-       const user =  await AsyncStorageStatic.getItem('user');
+       const user =  await AsyncStorage.getItem('user');
        JSON.parse(user);
        return user ? "Home" : "Login";
     }

@@ -1,4 +1,3 @@
-import { CurrentRenderContext } from '@react-navigation/native';
 import React from 'react';
 import { View, Stylesheet, Dimensions } from 'react-native"';
 

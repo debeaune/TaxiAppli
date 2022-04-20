@@ -1,18 +1,25 @@
 import React from 'react';
-import { View, Stylesheet, Dimensions} from "react-native";
+import { View, StyleSheet, Dimensions} from "react-native";
 import Constants from "expo-constants";
 import { Ionicons } from '@expo/vector/icons';
 
 import Block from '../components/Block';
 import Title from '../components/Title';
 import RoundBtn from '../components/RoundBtn';
-import { prefix, auth } from '../utils/helpers';
+import { prefix } from '../utils/helpers';
 
 const { width } = Dimensions.get("window");
 
 const HomeScreen = props => {
-    const { container, icon, container_2, titleContainer, roundBtnContainer } = styles;
+    const {
+        container, 
+        icon, 
+        container_2, 
+        titleContainer, 
+        roundBtnContainer 
+    } = styles;
 
+    const goTo = route => props.navigation.push(route);
     return (
         <View style={container}>
             <Block>
@@ -25,7 +32,7 @@ const HomeScreen = props => {
                     <Title content="Vous recherchez Un" size="medium"/>
                 </View>
                 <View style={roundBtnContainer}>
-                    <RoundBtn iconName={`${prefix}-car`} />
+                    <RoundBtn iconName={`${prefix}-car`} onPress={() => goTo("Passenger")} />
                     <RoundBtn iconName={`${prefix}-person`}/>
                 </View>
             </View>
