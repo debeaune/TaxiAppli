@@ -15,13 +15,15 @@ export const BASE_URL = "https://maps.googleapis.com/maps/api";
 
 export const auth = async = () => {
     try{
-        const { user,type } = await Google.logInAsync(config);
+        const { user, type } = await Google.logInAsync(config);
         //console.log('result', result);
         if(type === "success") {
             // stocker l'utilisateur dans la BDD
             // stocker l'utilisateur dans le mémoire interne
             const { name, photoUrl, email } = user;
-            await AsyncStorage.setItem('user', JSON.stringify({
+            await AsyncStorage.setItem(
+              "user", 
+              JSON.stringify({
               name,
               photoUrl,
               email
@@ -31,7 +33,7 @@ export const auth = async = () => {
         }
     }
     catch(e){
-        conole.error("error.auth", e);
+        console.error("error.auth", e);
     }
 }
 

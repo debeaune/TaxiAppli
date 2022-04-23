@@ -20,7 +20,7 @@ export default function App() {
       const result = await new Promise.all([
         Font.loadAsync({
           'Poppins':require('./assets/fonts/Poppins-Regular.ttf'),
-          'LeckerliOne':require('.assets/fonts/LeckerliOne-Regular.ttf')
+          'LeckerliOne':require('./assets/fonts/LeckerliOne-Regular.ttf')
         }),
         renderInitialScreen(),
         Permissions.askAsync(Permissions.LOCATION_FOREGROUND)

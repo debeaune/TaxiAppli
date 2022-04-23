@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Stylesheet, Dimensions} from "react-native";
+import { View, Text, StyleSheet, Dimensions} from "react-native";
 import Constants from "expo-constants";
-import { Ionicons } from '@expo/vector/icons';
+import { Ionicons } from "@expo/vector-icons";
 
 import Block from '../components/Block';
 import Title from '../components/Title';
