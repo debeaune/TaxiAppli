@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const Prediction = ({ main_text, secondary_text }) => {
+const Prediction = ({ main_text, secondary_text, onPress }) => {
     const { secondary, main, container } = styles;
     return (
-        <View style={container}>
-            <Text numberOfLines={1} style={secondary}>
-                {secondary_text}</Text>
-            <Text style={main}>{main_text}</Text>
-        </View>
+        <TouchableOpacity onPresss={onPress}>
+            <View style={container}>
+                <Text numberOfLines={1} style={secondary}>
+                    {secondary_text}</Text>
+                <Text style={main}>{main_text}</Text>
+            </View>
+        </TouchableOpacity>
     );
 };
 

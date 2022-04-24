@@ -13,7 +13,7 @@ const initialState = {
     loading: false
 }
 
-const PlaceInput = ({ latitude, longitude }) => {
+const PlaceInput = ({ latitude, longitude, onPredictionPress }) => {
     const [state, setState] = useState(initialState);
     const { container, icon, input, inputContainer } = styles;
     const { place, loading, predictions } = state;
@@ -26,6 +26,14 @@ const PlaceInput = ({ latitude, longitude }) => {
                     main_text={structured_formatting.main_text}
                     secondary_text={structured_formatting.secondary_text}
                     key={id}
+                    onPress={() => {
+                        onPredictionPress(place_id);
+                        setState(prevState => ({
+                            ...prevState,
+                            predictions: [],
+                            place: structured_formatting.main_text
+                        }));
+                    }}
                 />
             );
         });
