@@ -5,27 +5,71 @@ import {
     StyleSheet, 
     ActivityIndicator, 
     TouchableWithoutFeedback,
-    Keyboard 
+    Keyboard,
+    Alert,
+    Image 
 } from "react-native";
 import Constants from 'expo-constants';
 import MapView, { Polyline, Marker } from "react-native-maps";
 import * as Location from 'expo-location';
+import SocketIO from 'socket.io-client';
 
 import PlaceInput from '../components/PlaceInput';
-import { BASE_URL, API_KEY, getRoute, decodePoint } from '../utils/helpers';
+import { 
+    BASE_URL, 
+    API_KEY, 
+    getRoute, 
+    decodePoint 
+} from '../utils/helpers';
+import TAXI_LOGO from '../../assetss/images/taxi.png';
 
+let io;
 const initialState = {
     latitude: null, 
     longitude: null, 
     coordinates:[], 
-    destinationCoords:null 
+    destinationCoords:null ,
+    taxiCoords: null
 };
 const { width, height } = Dimensions.get('window');
 const PassengerScreen = props => {
     const mapView = useRef();
     const [state,setState] = useState(initialState);
-    const { latitude, longitude, coordinates, destinationCoords } = state;
-    const { container, mapStyle } = styles;
+    const { latitude, longitude, coordinates, destinationCoords, taxiCoords } = state;
+    const { container, mapStyle, taxiStyle } = styles;
+    useEffect(() => {
+        if(taxiCoords){
+            mapView.current.fitToCoordinates([...coordinates, taxiCoords], {
+                animated:true,
+                edgePadding: {
+                    top: 100,
+                    bottom: 40,
+                    left: 40,
+                    right: 40
+                }
+            });
+        }
+    },[taxiCoords]);
+    useEffect(() => {
+      return () => io.emit('quit', "pass");  
+    }, []);
+    const connectSocket = () => {
+        io = SocketIO.connect(SERVER_URL);
+        io.on("connect", () => {
+            console.log("connexion passager réussie");
+        });
+        io.on("requestPassenger", taxiInfo => {
+            //alerte pour dire qu'un taxi est en route
+            Alert.alert("Taxi en Route");
+            setState(prevState => ({
+                ...prevState,
+                taxiCoords:{
+                    latitude: taxiInfo.lat,
+                    longitude: taxiInfo.long
+                }
+            }));
+        });
+    }; 
 
     const handlePredictionPress = async place_id =>{
         try{
@@ -46,7 +90,8 @@ const PassengerScreen = props => {
                     left: 40,
                     right: 40
                 }
-            })
+            });
+            io.emit("requestTaxi", { latitude, longitude  });
         }catch(e) {
             console.error('error prediction press', e);
         }
@@ -102,12 +147,16 @@ const PassengerScreen = props => {
                     { destinationCoords && ( <Marker
                         coordinate = {destinationCoords}
                     />)}
+                    { taxiCoords && (
+                        <Marker coordinate={taxiCoords}>
+                            <Image source={TAXI_LOGO} style={taxiStyle} />
+                        </Marker>
+                        )}
                 </MapView>
                 <PlaceInput 
                     latitude={latitude} 
                     longitude={longitude} 
-                    onPredictionPress={handlePredictionPress}
-                    
+                    onPredictionPress={handlePredictionPress}   
                 />
             </View>
         </TouchableWithoutFeedback>   
@@ -126,6 +175,10 @@ const styles = StyleSheet.create({
     mapStyle: {
         width,
         height
+    },
+    taxiStyle: {
+        width: 30,
+        height: 30
     }
 });
 

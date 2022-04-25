@@ -32,8 +32,14 @@ const HomeScreen = props => {
                     <Title content="Vous recherchez Un" size="medium"/>
                 </View>
                 <View style={roundBtnContainer}>
-                    <RoundBtn iconName={`${prefix}-car`} onPress={() => goTo("Passenger")} />
-                    <RoundBtn iconName={`${prefix}-person`}/>
+                    <RoundBtn 
+                        iconName={`${prefix}-car`} 
+                        onPress={() => goTo("Passenger")} 
+                    />
+                    <RoundBtn 
+                        iconName={`${prefix}-person`}
+                        onPress={() => goTo("Driver")}
+                    />
                 </View>
             </View>
         </View>

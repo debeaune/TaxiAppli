@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage} from '@react-native-community/async-storage';
 import * as Google from "expo-auth-session";
 import axios from 'axios';
 import Polyline from '@mapbox/polyline';
@@ -41,8 +41,7 @@ export const auth = async () => {
 
 export const renderInitialScreen = async () => {
     try
-    {
-       const user =  await AsyncStorage.getItem('user');
+    {       const user =  await AsyncStorage.getItem('user');
        JSON.parse(user);
        return user ? "Home" : "Login";
     }
@@ -51,6 +50,8 @@ export const renderInitialScreen = async () => {
         console.error('error render initial screen', e);
     }
 };
+
+export const SERVER_URL = "http://192.168.1.13:4000";
 
 export const getRoute = async url =>{
     try{
