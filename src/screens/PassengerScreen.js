@@ -19,9 +19,11 @@ import {
     BASE_URL, 
     API_KEY, 
     getRoute, 
-    decodePoint 
+    decodePoint,
+    SERVER_URL,
+    whiteMapStyle
 } from '../utils/helpers';
-import TAXI_LOGO from '../../assetss/images/taxi.png';
+import TAXI_LOGO from '../../assets/images/taxi.png';
 
 let io;
 const initialState = {

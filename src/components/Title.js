@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const Title = ({ content }) => {
+const Title = ({ content, size }) => {
     const { container, title, small, medium } = styles;
-    const getTitleStyle =  () => {
-        switch(size){
-            case 'big':
+    const getTitleStyle = () => {
+        switch (size){
+            case "big":
                 return title;
-            case 'small':
+            case "small":
                 return small;
-            case 'medium':
+            case "medium":
                 return medium;
         }
     };

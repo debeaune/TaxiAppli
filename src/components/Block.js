@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Stylesheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -11,7 +11,7 @@ const Block = ({ children}) => {
     )
 }
 
-const styles = Stylesheet.create({
+const styles = StyleSheet.create({
     container: {
         width:(width * 4) / 3,
         backgroundColor: "#2dbb54",

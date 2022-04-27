@@ -8,7 +8,7 @@ import * as Permissions from 'expo-permissions';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import PassengerScreen from './src/screens/PassengerScreen';
-import DriverScreen from './scr/screens/DriverScreen';
+import DriverScreen from './src/screens/DriverScreen';
 import { renderInitialScreen } from './src/utils/helpers';
 
 const { Navigator, Screen } = createStackNavigator();

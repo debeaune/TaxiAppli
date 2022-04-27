@@ -1,8 +1,9 @@
 import { Platform } from "react-native";
-import {AsyncStorage} from '@react-native-community/async-storage';
-import * as Google from "expo-auth-session";
+//import {AsyncStorage} from '@react-native-community/async-storage';
+import * as Google from "expo-google-app-auth";
 import axios from 'axios';
 import Polyline from '@mapbox/polyline';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const prefix = Platform.OS === "ios" ? "ios" : "md";
 

@@ -24,14 +24,15 @@ const initialState = {
     taxiOk:false
 };
 const { width, height } = Dimensions.get('window');
+
 const DriverScreen = props => {
-    const [state,setState] = useState(initialState);
+    const [state, setState] = useState(initialState);
     const { latitude, longitude, taxiOk, coordinates, destinationCoords } = state;
     const { container, mapStyle, mySpinner } = styles;
     const openMaps = (latitude, longitude) => {
         setState(prevState => ({
             ...prevState,
-            taxiOk:true
+            taxiOk: true
         }));
         const androidUrl = `geo:0,0?q=${latitude},${longitude}(destination)`;
         const iosUrl = `http://maps.apple.com?addr=${latitude},${longitude}`;
@@ -42,19 +43,19 @@ const DriverScreen = props => {
         return () => io.emit('quit', "taxi");
     }, []);
     useEffect(() => {
-        if(taxiOk){
+        if (taxiOk) {
             io.emit('requestPassenger', { lat: latitude, long: longitude });
         }
     }, [taxiOk]);
-    const searchPasssenger = ({ lat, long }) =>{
+    const searchPasssenger = ({ lat, long }) => {
         io = SocketIO.connect(SERVER_URL);
-        io.on("connect",() => {
+        io.on("connect", () => {
             console.log('connexion taxi réussie');
             io.emit('requestPassenger', { lat, long });
             io.on('requestTaxi', passInfo => {
                 setState(prevState => ({
                     ...prevState,
-                    destinationCoords:{
+                    destinationCoords: {
                         latitude: passInfo.latitude,
                         longitude: passInfo.longitude
                     }
@@ -65,28 +66,28 @@ const DriverScreen = props => {
                     "Acceptez-vous la course?",
                     [
                         {
-                           text: "Refuser",
-                           onPress: () => {}
+                            text: "Refuser",
+                            onPress: () => { }
                         },
                         {
-                           text:"Accepter",
-                           onPress: () =>{
-                            //ouvrir google map
-                            openMaps(passInfo.latitude, passInfo.longitude);
-                           }
+                            text: "Accepter",
+                            onPress: () => {
+                                //ouvrir google map
+                                openMaps(passInfo.latitude, passInfo.longitude);
+                            }
                         }
-                    ], 
+                    ],
                     {
-                        cancelable:false 
+                        cancelable: false
                     });
                 //si il est OK, on passe aux étapes 6 et 7
             });
         });
     };
-    const getUserLocation = async() => {
-        try{
-             const { 
-                coords : { latitude, longitude }
+    const getUserLocation = async () => {
+        try {
+            const {
+                coords: { latitude, longitude }
             } = await Location.getCurrentPositionAsync();
             setState(prevState => ({
                 ...prevState,
@@ -101,37 +102,36 @@ const DriverScreen = props => {
 
     useEffect(() => {
         getUserLocation();
-    },[]);
-    if(!latitude || !longitude) {
+    }, []);
+    if (!latitude || !longitude) {
         return (
             <View style={container}>
                 <ActivityIndicator size='large' />
             </View>
-        )
+        );
     }
     return (
         <View style={container}>
             <MapView
-                provider={PROVIDER_GOOGLE} 
+                provider={PROVIDER_GOOGLE}
                 customMapStyle={whiteMapStyle}
-                style={mapStyle} 
-                showUserLocation 
+                style={mapStyle}
+                showUserLocation
                 followUserLocation
                 region={{
                     latitude,
                     longitude,
-                    latitudeDelta:0.015,
-                    longitudeDelta:0.121
-                 }} 
-            />
+                    latitudeDelta: 0.015,
+                    longitudeDelta: 0.121
+                }} />
             {!destinationCoords && (
                 <View style={mySpinner}>
                     <ActivityIndicator size="large" color="#fff" />
                 </View>
             )}
         </View>
-    ); 
-};
+    );
+}
 
 const styles = StyleSheet.create({
     container: {
