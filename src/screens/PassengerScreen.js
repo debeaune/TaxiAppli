@@ -10,7 +10,7 @@ import {
     Image 
 } from "react-native";
 import Constants from 'expo-constants';
-import MapView, { Polyline, Marker } from "react-native-maps";
+import MapView, { Polyline, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
 import SocketIO from 'socket.io-client';
 
@@ -126,6 +126,8 @@ const PassengerScreen = props => {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={container}>
                 <MapView 
+                    provider={PROVIDER_GOOGLE}
+                    customMapStyle={whiteMapStyle}
                     ref={mapView}
                     style={mapStyle} 
                     showUserLocation 

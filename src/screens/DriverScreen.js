@@ -9,9 +9,10 @@ import {
     Linking
 } from "react-native";
 import Constants from 'expo-constants';
-import MapView from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
 import SocketIO from "socket.io-client";
+import { SERVER_URL, whiteMapStyle } from "../utils/helpers";
 
 let io;
 
@@ -111,6 +112,8 @@ const DriverScreen = props => {
     return (
         <View style={container}>
             <MapView
+                provider={PROVIDER_GOOGLE} 
+                customMapStyle={whiteMapStyle}
                 style={mapStyle} 
                 showUserLocation 
                 followUserLocation
