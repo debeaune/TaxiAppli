@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 const Prediction = ({ main_text, secondary_text, onPress }) => {
     const { secondary, main, container } = styles;
     return (
-        <TouchableOpacity onPresss={onPress}>
+        <TouchableOpacity onPress={onPress}>
             <View style={container}>
                 <Text numberOfLines={1} style={secondary}>
                     {secondary_text}</Text>
